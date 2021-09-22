@@ -50,8 +50,6 @@ def make_encoder(input_size, hidden_layer_size, z_size, bias = True, batch_norm 
 
     main_enc = nn.Sequential(
             *form_block(input_size, hidden_layer_size, bias = bias, batch_norm = batch_norm),
-            *form_block(hidden_layer_size, hidden_layer_size, bias = bias, batch_norm = batch_norm),
-            *form_block(hidden_layer_size, hidden_layer_size, bias = bias, batch_norm = False)
             )
 
     enc_mean = nn.Linear(hidden_layer_size, z_size, bias = bias)
@@ -102,8 +100,6 @@ class GumbelClassifier(pl.LightningModule):
 
         self.encoder = nn.Sequential(
             *form_block(input_size, hidden_layer_size, bias = bias, batch_norm = batch_norm),
-            *form_block(hidden_layer_size, hidden_layer_size, bias = bias, batch_norm = batch_norm),
-            *form_block(hidden_layer_size, hidden_layer_size, bias = bias, batch_norm = False),
             nn.Linear(hidden_layer_size, z_size, bias = True),
             nn.LeakyReLU()
         )
@@ -118,7 +114,6 @@ class GumbelClassifier(pl.LightningModule):
         self.weight_creator = nn.Sequential(
             *form_block(input_size, hidden_layer_size, batch_norm = batch_norm),
             nn.Dropout(),
-            *form_block(hidden_layer_size, hidden_layer_size, batch_norm = batch_norm),
             nn.LeakyReLU(),
             nn.Linear(hidden_layer_size, input_size)
         )
@@ -407,7 +402,6 @@ class VAE_Gumbel(VAE):
         self.weight_creator = nn.Sequential(
             *form_block(input_size, hidden_layer_size, batch_norm = batch_norm),
             nn.Dropout(),
-            *form_block(hidden_layer_size, hidden_layer_size, batch_norm = batch_norm),
             nn.LeakyReLU(),
             nn.Linear(hidden_layer_size, input_size)#,
             #nn.LeakyReLU()
