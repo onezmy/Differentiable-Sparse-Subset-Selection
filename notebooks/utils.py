@@ -1466,6 +1466,7 @@ def generate_synthetic_data_with_noise(N, z_size, n_classes, D, D_noise = None, 
 
     if seed:
         torch.manual_seed(seed)
+        np.random.seed(seed)
 
     class_logit = torch.rand(n_classes)
     with torch.no_grad():
